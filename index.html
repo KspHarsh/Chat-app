@@ -87,7 +87,8 @@
         }
 
         const serverAddress = window.location.hostname;
-        const socket = new WebSocket(`ws://${serverAddress}:3000`);
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const socket = new WebSocket(`${protocol}//${serverAddress}`);
         const messagesDiv = document.getElementById('messages');
         const messageForm = document.getElementById('message-form');
         const messageInput = document.getElementById('message-input');
