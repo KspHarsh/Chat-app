@@ -127,12 +127,18 @@
             event.preventDefault();
             const message = messageInput.value;
             if (message.trim()) {
-                const messageObject = {
-                    username: username,
-                    message: message
-                };
-                socket.send(JSON.stringify(messageObject));
-                messageInput.value = '';
+                if (socket.readyState === WebSocket.OPEN) {
+                    const messageObject = {
+                        username: username,
+                        message: message
+                    };
+                    socket.send(JSON.stringify(messageObject));
+                    messageInput.value = '';
+                } else {
+                    console.warn('WebSocket not open. Message not sent.');
+                    // Optionally, you could queue the message to be sent once the socket opens
+                    // Or display a user-friendly message in the UI
+                }
             }
         });
     </script>
